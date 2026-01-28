@@ -17,3 +17,13 @@ with a deployable and automated DevOps-oriented architecture.
 - Verre à vin
 - Flute champagne
 - Couvert complet (Cuillère à soupe, fourchette, couteau, cuillère à dessert)
+- 
+## Architecture
+
+The project uses a simple three-tier architecture:
+
+- **Frontend**: Web interface for dish counting
+- **Backend**: FastAPI REST API handling business logic
+- **Database**: PostgreSQL for persistent storage
+
+All components are containerized using Docker and orchestrated with docker-compose.
