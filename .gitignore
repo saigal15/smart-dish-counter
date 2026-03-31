@@ -1,3 +1,19 @@
-# Python virtual environments
+# Python
+__pycache__/
+*.pyc
+
+# Virtual environment
 venv/
-backend/venv/
+
+# Environment variables
+.env
+
+# IDE
+.vscode/
+.idea/
+
+# OS
+.DS_Store
+
+# Logs
+*.log
