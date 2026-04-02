@@ -2,37 +2,55 @@ from fastapi import FastAPI, HTTPException
 from sqlalchemy.orm import Session
 from app.database import SessionLocal
 from app.models import DishType, Return
+from app.schemas import CalculateRequest, CalculateResponse, ReturnResponse
 
 app = FastAPI()
 
+@app.post("/calculate", response_model=CalculateResponse)
+def calculate(request: CalculateRequest):
+    db = SessionLocal()
 
-@app.post("/calculate")
-def calculate(dish_type_id: int, total_weight: int):
-    db: Session = SessionLocal()
-
-    # 1. récupérer type de vaisselle
-    dish = db.query(DishType).filter(DishType.id == dish_type_id).first()
+    dish = db.query(DishType).filter(DishType.id == request.dish_type_id).first()
 
     if not dish:
         raise HTTPException(status_code=404, detail="Dish type not found")
 
-    # 2. calcul
-    quantity = total_weight // dish.unit_weight
+    quantity = request.total_weight // dish.unit_weight
 
-    # 3. sauvegarde
     new_return = Return(
-        dish_type_id=dish_type_id,
-        total_weight=total_weight,
+        dish_type_id=request.dish_type_id,
+        total_weight=request.total_weight,
         quantity=quantity
     )
 
     db.add(new_return)
     db.commit()
 
-    # 4. réponse
     return {
         "dish_type": dish.name,
         "unit_weight": dish.unit_weight,
-        "total_weight": total_weight,
+        "total_weight": request.total_weight,
         "quantity": quantity
     }
+
+@app.get("/returns", response_model=list[ReturnResponse])
+def get_returns():
+    db = SessionLocal()
+
+    results = db.query(Return).all()
+
+    response = []
+
+    for r in results:
+        dish = db.query(DishType).filter(DishType.id == r.dish_type_id).first()
+        dish_name = dish.name if dish else "Unknown"
+
+        response.append({
+            "id": r.id,
+            "dish_type": dish_name,
+            "total_weight": r.total_weight,
+            "quantity": r.quantity,
+            "created_at": r.created_at
+        })
+
+    return response
