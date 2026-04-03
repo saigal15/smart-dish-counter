@@ -1,9 +1,10 @@
-from pydantic import BaseModel, Field
+from pydantic import BaseModel
 from datetime import datetime
 
+
 class CalculateRequest(BaseModel):
-    dish_type_id: int = Field(..., example=1)
-    total_weight: int = Field(..., gt=0, example=12000)
+    dish_type_id: int
+    total_weight: int
 
 
 class CalculateResponse(BaseModel):
@@ -12,9 +13,13 @@ class CalculateResponse(BaseModel):
     total_weight: int
     quantity: int
 
+
 class ReturnResponse(BaseModel):
     id: int
     dish_type: str
     total_weight: int
     quantity: int
-    created_at: datetime
+    created_at: datetime   # ✅ correction ici
+
+    class Config:
+        from_attributes = True   # ✅ correction Pydantic v2
