@@ -65,4 +65,75 @@ Production-oriented thinking
 Isolated Python environment ready for backend development.
 
 
+## Lancer PostgreSQL avec Docker
+docker-compose up -d
+
+### Vérifier que le conteneur tourne :
+
+docker ps
+Base de données
+
+Connexion :
+
+docker exec -it smart-dish-db psql -U user -d smartdish
+
+### Tables existantes :
+
+dish_types
+returns
+### Lancer l’API
+uvicorn app.main:app --reload --host 127.0.0.1 --port 8001
+## Accès API
+
+### Swagger UI :
+
+http://127.0.0.1:8001/docs
+Endpoints
+##POST /calculate
+
+Calcule le nombre de plats à partir du poids total.
+
+Exemple request :
+{
+  "dish_type_id": 1,
+  "total_weight": 12000
+}
+Exemple response :
+{
+  "dish_type": "Grande assiette",
+  "unit_weight": 600,
+  "total_weight": 12000,
+  "quantity": 20
+}
+## GET /returns
+
+Retourne tous les calculs enregistrés.
+
+Exemple :
+[
+  {
+    "id": 1,
+    "dish_type": "Grande assiette",
+    "total_weight": 12000,
+    "quantity": 20,
+    "created_at": "2026-03-30T23:39:52.350127"
+  }
+]
+## Structure du projet
+app/
+├── main.py
+├── database.py
+├── models.py
+├── schemas.py
+├── crud/
+│   └── returns.py
+├── routers/
+│   ├── calculate.py
+│   └── returns.py
+└── services/
+    └── calculator.py
+
+
+
+
 
