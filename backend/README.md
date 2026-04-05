@@ -135,5 +135,24 @@ app/
 
 
 
+### Build Docker image
+
+docker build -t smart-dish-backend .
+
+### Run container
+
+docker run -p 8001:8001 smart-dish-backend
+
+### Access API
+
+Swagger UI:
+http://localhost:8001/docs
+
+### Available endpoints
+
+- POST /calculate
+- GET /returns
+
+
 
 
