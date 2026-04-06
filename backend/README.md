@@ -153,6 +153,15 @@ http://localhost:8001/docs
 - POST /calculate
 - GET /returns
 
+## Docker Compose 
+
+### Run with Docker Compose 
+### Build and start services 
+#### Command
+docker-comose up --build ou docker compose up -d (pour laisse tourner arrière)
+
+Created image for db et backend ( smartdish_backend et smartdish_db)
+
 
 
 

@@ -2,7 +2,7 @@ from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker, declarative_base
 
 # URL de la base PostgreSQL
-DATABASE_URL = "postgresql://user:password@localhost:5432/smartdish"
+DATABASE_URL = "postgresql://user:password@db:5432/smartdish"
 
 # Créer l'engine SQLAlchemy
 engine = create_engine(DATABASE_URL, echo=True)  # echo=True affiche les requêtes SQL dans la console
